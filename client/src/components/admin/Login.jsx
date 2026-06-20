@@ -3,7 +3,7 @@ import { useAppContext } from '../../context/AppContext';
 import toast from 'react-hot-toast';
 
 const AdminLogin = () => {
-  const {axios, setAdminToken} = useAppContext()
+  const {axios, setAdminToken, navigate} = useAppContext()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -14,6 +14,8 @@ const AdminLogin = () => {
       if(data.success) {
         setAdminToken(data.token)
         localStorage.setItem('adminToken', data.token)
+        toast.success('Admin login successful')
+        navigate('/admin')
       } else {
         toast.error(data.message)
       }
@@ -27,8 +29,8 @@ const AdminLogin = () => {
       <div className='w-full max-w-sm p-6 max-md:m-6 border border-primary/30 shadow-xl shadow-primary/15 rounded-lg'>
         <div className='flex flex-col items-center justify-center'>
           <div className='w-full py-6 text-center'>
-            <h1 className='text-3xl font-bold'><span className='text-primary'>Admin</span> Panel</h1>
-            <p className='font-light'>Enter admin credentials</p>
+            <h1 className='text-3xl font-bold'><span className='text-primary'>Admin</span> Login</h1>
+            <p className='font-light'>Enter your admin credentials</p>
           </div>
           <form onSubmit={handleSubmit} className='mt-6 w-full sm:max-w-md text-gray-600'>
             <div className='flex flex-col'>
@@ -41,6 +43,7 @@ const AdminLogin = () => {
             </div>
             <button className='w-full py-3 font-medium bg-primary text-white rounded cursor-pointer hover:bg-primary/90 transition-all' type='submit'>Login</button>
           </form>
+          <button onClick={() => navigate('/login')} className='mt-4 text-sm text-primary cursor-pointer hover:underline'>Back to login options</button>
         </div>
       </div>
     </div>

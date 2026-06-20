@@ -53,6 +53,7 @@ const UserLogin = () => {
                   <button className='w-full py-3 font-medium bg-primary text-white rounded cursor-pointer hover:bg-primary/90 transition-all' type='submit'> Login </button>
               </form>
               <p className='mt-4 text-sm'>Don't have an account? <span onClick={()=>navigate('/register')} className='text-primary cursor-pointer'>Register here</span></p>
+              <button onClick={() => navigate('/login')} className='mt-4 text-sm text-primary cursor-pointer hover:underline'>Back to login options</button>
           </div>
         </div>
       </div>

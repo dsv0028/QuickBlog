@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Blog from './pages/Blog'
 import Register from './components/Register'
+import Login from './components/Login'
 import UserLogin from './components/UserLogin'
 import Profile from './components/Profile'
 
@@ -36,7 +37,9 @@ const App = () => {
         {/* Public */}
         <Route path='/' element={<Home/>}/>
         <Route path='/blog/:id' element={<Blog/>}/>
-        <Route path='/login' element={<UserLogin/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/login/user' element={<UserLogin/>}/>
+        <Route path='/login/admin' element={<AdminLogin/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/profile' element={<Profile/>}/>
 
