@@ -1,0 +1,70 @@
+import React, { useState } from 'react'
+import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
+import { assets } from '../assets/assets';
+import Navbar from './Navbar';
+
+const Register = () => {
+
+  const {axios, setToken, setUser, navigate} = useAppContext()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = async (e) => {
+      e.preventDefault()
+      try {
+        const { data } = await axios.post('/api/user/register', {name, email, password})
+
+        if(data.success) {
+          setToken(data.token)
+          setUser(data.user)
+          localStorage.setItem('token', data.token)
+          axios.defaults.headers.common['Authorization'] = data.token
+          toast.success('Account created successfully')
+          navigate('/')
+        } else {
+          toast.error(data.message)
+        }
+      } catch (error) {
+        toast.error(error.message)
+      }
+  }
+   
+  return (
+    <>
+      <Navbar/>
+      <div className='flex items-center justify-center min-h-screen'>
+        <div className='w-full max-w-sm p-6 max-md:m-6 border border-primary/30 shadow-xl shadow-primary/15 rounded-lg'>
+          <div className='flex flex-col items-center justify-center'>
+              <div className='w-full py-6 text-center'>
+                  <h1 className='text-3xl font-bold'>Create <span className='text-primary'>Account</span></h1>
+                  <p className='font-light'>Join us and start blogging</p>
+              </div>
+              <form onSubmit={handleSubmit} className='mt-6 w-full sm:max-w-md text-gray-600'>
+                  <div className='flex flex-col'>
+                      <label> Name </label>
+                      <input onChange={ (e) => setName(e.target.value) } value={name} className='border-b-2 border-gray-300 p-2 outline-none mb-6' type="text" required placeholder='your name'/>
+                  </div>
+                  
+                  <div className='flex flex-col'>
+                      <label> Email </label>
+                      <input onChange={ (e) => setEmail(e.target.value) } value={email} className='border-b-2 border-gray-300 p-2 outline-none mb-6' type="email" required placeholder='your email'/>
+                  </div>
+                  
+                  <div className='flex flex-col'>
+                      <label> Password </label>
+                      <input onChange={ (e) => setPassword(e.target.value) } value={password} className='border-b-2 border-gray-300 p-2 outline-none mb-6' type="password" required placeholder='your password'/>
+                  </div>
+
+                  <button className='w-full py-3 font-medium bg-primary text-white rounded cursor-pointer hover:bg-primary/90 transition-all' type='submit'> Register </button>
+              </form>
+              <p className='mt-4 text-sm'>Already have an account? <span onClick={()=>navigate('/login')} className='text-primary cursor-pointer'>Login here</span></p>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default Register
