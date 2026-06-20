@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: quickblog-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        scope: run
+      - key: ADMIN_EMAIL
+        scope: run
+      - key: ADMIN_PASSWORD
+        scope: run
+      - key: MONGODB_URI
+        scope: run
+      - key: IMAGEKIT_PUBLIC_KEY
+        scope: run
+      - key: IMAGEKIT_PRIVATE_KEY
+        scope: run
+      - key: IMAGEKIT_URL_ENDPOINT
+        scope: run
+      - key: GEMINI_API_KEY
+        scope: run
+      - key: PORT
+        value: "10000"
+        scope: run
